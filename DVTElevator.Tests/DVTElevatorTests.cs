@@ -38,12 +38,20 @@ namespace DVTElevator.Tests
         [Fact]
         public void Should_Find_Nearest_Elevator()
         {
+            // Initialize the building with 10 floors and 3 elevators
             var building = new Building(10, 3);
             var controller = new ElevatorController(building);
+
+            // Create a passenger request on the 5th floor
             var request = new PassengerRequest(5, 2);
 
+            // Find the nearest elevator to the 5th floor
             var nearestElevator = controller.FindNearestElevator(request.Floor);
+
+            // Assert that the nearest elevator is not null
             Assert.NotNull(nearestElevator);
+
+            // Additional assertions to verify the nearest elevator's properties
             Assert.Equal(1, nearestElevator.CurrentFloor); // Assuming all elevators start at floor 1
         }
 
@@ -78,9 +86,10 @@ namespace DVTElevator.Tests
         [Fact]
         public void Should_Handle_Invalid_Floor_Number()
         {
+            // Here we will deal with invalid floor numbers entered 
+
             var building = new Building(10, 3);
             var controller = new ElevatorController(building);
-
             var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(11, 2)));
             Assert.NotNull(exception);
             Assert.IsType<ArgumentOutOfRangeException>(exception);
