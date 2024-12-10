@@ -73,7 +73,7 @@ public class Building
     public Building(int numberOfFloors, int numberOfElevators)
     {
         Floors = Enumerable.Range(1, numberOfFloors).ToList();
-        Elevators = new List<Elevator>(numberOfElevators);
+        Elevators = new List<Elevator>(); //(numberOfElevators);
         for (int i = 0; i < numberOfElevators; i++)
         {
             Elevators.Add(new Elevator { Id = i + 1, CurrentFloor = 1, Direction = Direction.None, Status = ElevatorStatus.Stationary });
@@ -118,7 +118,7 @@ public class ElevatorController
     public Elevator FindNearestElevator(int floor)
     {
         //Find the nearest elevator to fulfil the user request
-        return building.Elevators.OrderBy(e => Math.Abs(e.CurrentFloor - floor)).First();
+        return building.Elevators.OrderBy(e => Math.Abs(e.CurrentFloor - floor)).FirstOrDefault();
     }
 
     public async Task RunAsync()
