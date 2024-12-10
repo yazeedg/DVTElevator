@@ -89,9 +89,10 @@ namespace DVTElevator.Tests
         [Fact]
         public void Should_Handle_Invalid_Passenger_Count()
         {
+            // Here we will deal with invalid passenger count entered
+
             var building = new Building(10, 3);
             var controller = new ElevatorController(building);
-
             var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(5, -1)));
             Assert.NotNull(exception);
             Assert.IsType<ArgumentOutOfRangeException>(exception);
