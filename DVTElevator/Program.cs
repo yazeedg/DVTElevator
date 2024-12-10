@@ -14,7 +14,8 @@ public class Elevator
     public ElevatorStatus Status { get; set; }
     public int PassengerCount { get; set; }
     public const int MaxPassengers = 10;
-    private Queue<PassengerRequest> requests = new Queue<PassengerRequest>();
+   // private Queue<PassengerRequest> requests = new Queue<PassengerRequest>();
+    public Queue<PassengerRequest> requests { get; private set; } = new Queue<PassengerRequest>();
 
     public void AddRequest(PassengerRequest request)
     {
@@ -38,7 +39,7 @@ public class Elevator
         }
     }
 
-    private async Task MoveToFloorAsync(int floor)
+    public async Task MoveToFloorAsync(int floor)
     {
         // Simulate elevator movement
         await Task.Delay(Math.Abs(CurrentFloor - floor) * 1000);
@@ -99,7 +100,7 @@ public class ElevatorController
         nearestElevator.AddRequest(request);
     }
 
-    private Elevator FindNearestElevator(int floor)
+    public Elevator FindNearestElevator(int floor)
     {
         return building.Elevators.OrderBy(e => Math.Abs(e.CurrentFloor - floor)).First();
     }
@@ -109,7 +110,29 @@ public class ElevatorController
         while (true)
         {
             DisplayElevatorStatus();
-            // Handle user input
+
+            Console.WriteLine("Enter floor number to call an elevator (or 'exit' to quit):");
+            var input = Console.ReadLine();
+            if (input.ToLower() == "exit") break;
+
+            if (int.TryParse(input, out int floor))
+            {
+                Console.WriteLine("Enter number of passengers:");
+                input = Console.ReadLine();
+                if (int.TryParse(input, out int passengers))
+                {
+                    HandleRequest(new PassengerRequest(floor, passengers));
+                }
+                else
+                {
+                    Console.WriteLine("Invalid number of passengers.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid floor number.");
+            }
+
             await Task.Delay(1000);
         }
     }

@@ -1,3 +1,7 @@
+using System.Threading.Tasks;
+using Xunit;
+using DVTElevator;
+
 namespace DVTElevator.Tests
 {
     public class ElevatorTests
@@ -43,7 +47,8 @@ namespace DVTElevator.Tests
 
             controller.HandleRequest(request);
             var nearestElevator = controller.FindNearestElevator(request.Floor);
-            Assert.Contains(request, nearestElevator.Requests);
+            //Assert.Contains(request, nearestElevator.Requests);
+            Assert.Contains(request, nearestElevator.requests);
         }
     }
 }
