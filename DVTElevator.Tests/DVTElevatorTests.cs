@@ -22,6 +22,15 @@ namespace DVTElevator.Tests
             elevator.AddRequest(request);
             Assert.True(elevator.PassengerCount <= Elevator.MaxPassengers);
         }
+
+        [Fact]
+        public void Elevator_Should_Handle_Passenger_Request()
+        {
+            var elevator = new Elevator { Id = 1, PassengerCount = 0 };
+            var request = new PassengerRequest(3, 2);
+            elevator.AddRequest(request);
+            Assert.Contains(request, elevator.requests);
+        }
     }
 
     public class ElevatorControllerTests
@@ -47,8 +56,45 @@ namespace DVTElevator.Tests
 
             controller.HandleRequest(request);
             var nearestElevator = controller.FindNearestElevator(request.Floor);
-            //Assert.Contains(request, nearestElevator.Requests);
             Assert.Contains(request, nearestElevator.requests);
+        }
+
+        [Fact]
+        public async Task Elevator_Should_Handle_Multiple_Requests()
+        {
+            var elevator = new Elevator { Id = 1, CurrentFloor = 1 };
+            var request1 = new PassengerRequest(3, 2);
+            var request2 = new PassengerRequest(5, 1);
+
+            elevator.AddRequest(request1);
+            elevator.AddRequest(request2);
+
+            await elevator.MoveAsync();
+
+            Assert.Equal(5, elevator.CurrentFloor);
+            Assert.Equal(3, elevator.PassengerCount);
+        }
+
+        [Fact]
+        public void Should_Handle_Invalid_Floor_Number()
+        {
+            var building = new Building(10, 3);
+            var controller = new ElevatorController(building);
+
+            var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(11, 2)));
+            Assert.NotNull(exception);
+            Assert.IsType<ArgumentOutOfRangeException>(exception);
+        }
+
+        [Fact]
+        public void Should_Handle_Invalid_Passenger_Count()
+        {
+            var building = new Building(10, 3);
+            var controller = new ElevatorController(building);
+
+            var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(5, -1)));
+            Assert.NotNull(exception);
+            Assert.IsType<ArgumentOutOfRangeException>(exception);
         }
     }
 }
