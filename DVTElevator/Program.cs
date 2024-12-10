@@ -117,6 +117,7 @@ public class ElevatorController
 
     public Elevator FindNearestElevator(int floor)
     {
+        //Find the nearest elevator to fulfil the user request
         return building.Elevators.OrderBy(e => Math.Abs(e.CurrentFloor - floor)).First();
     }
 
