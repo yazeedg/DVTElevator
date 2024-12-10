@@ -42,7 +42,7 @@ Those reviewing the submission consider the following:
 - Informative readme present
 - Code comments in line with MS documentation
 - Code comments per generally accepted industry guidelines
-## Clean Architecture, or similar
+## Clean Architecture
 - Project/s must be structured according to clean architecture or similar. Adopting clean architecture
 or similar principles in C# code promotes better software design and development practices, leading
 to more maintainable, robust, and scalable applications. It also enables better alignment with
