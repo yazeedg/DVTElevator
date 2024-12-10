@@ -47,7 +47,7 @@ Those reviewing the submission consider the following:
 or similar principles in C# code promotes better software design and development practices, leading
 to more maintainable, robust, and scalable applications. It also enables better alignment with
 business requirements and simplifies the development process for teams.
-## SOLID
+## SOLID principles are followed
 - Single Responsibility Principle (SRP)
 Each class or component in the application should have a single responsibility related to elevator
 movement. For example, you might have separate classes for elevator control, floor management,
