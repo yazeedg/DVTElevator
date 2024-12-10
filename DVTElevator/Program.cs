@@ -25,7 +25,12 @@ public class Elevator
         }
         else
         {
-            // Handle overflow
+            // Handle overflow if number of passengers selected are more than the maximum for the elevator
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
+            Console.ResetColor();
+            
         }
     }
 
@@ -87,17 +92,27 @@ public class ElevatorController
 
     public void DisplayElevatorStatus()
     {
+        Console.WriteLine("Elevator Status:");
+        Console.WriteLine("ID | Floor | Direction | Status     | Passengers");
+        Console.WriteLine("-----------------------------------------------");
         foreach (var elevator in building.Elevators)
         {
-            Console.WriteLine($"Elevator {elevator.Id}: Floor {elevator.CurrentFloor}, Direction {elevator.Direction}, " +
-                              $"Status {elevator.Status}, Passengers {elevator.PassengerCount}");
+            Console.WriteLine($"{elevator.Id,2} | {elevator.CurrentFloor,5} | {elevator.Direction,-9} | {elevator.Status,-10} | {elevator.PassengerCount,10}");
         }
     }
 
     public void HandleRequest(PassengerRequest request)
     {
         var nearestElevator = FindNearestElevator(request.Floor);
-        nearestElevator.AddRequest(request);
+        if (nearestElevator != null)
+        {
+            nearestElevator.AddRequest(request);
+            Console.WriteLine($"Elevator {nearestElevator.Id} is on its way to floor {request.Floor}.");
+        }
+        else
+        {
+            Console.WriteLine("No available elevators to handle the request.");
+        }
     }
 
     public Elevator FindNearestElevator(int floor)
@@ -109,28 +124,43 @@ public class ElevatorController
     {
         while (true)
         {
-            DisplayElevatorStatus();
-
-            Console.WriteLine("Enter floor number to call an elevator (or 'exit' to quit):");
+            Console.Clear();
+            Console.WriteLine("Elevator Control System");
+            Console.WriteLine("1. View Elevator Status");
+            Console.WriteLine("2. Call Elevator");
+            Console.WriteLine("3. Exit");
+            Console.Write("Select an option: ");
             var input = Console.ReadLine();
-            if (input.ToLower() == "exit") break;
 
-            if (int.TryParse(input, out int floor))
+            switch (input)
             {
-                Console.WriteLine("Enter number of passengers:");
-                input = Console.ReadLine();
-                if (int.TryParse(input, out int passengers))
-                {
-                    HandleRequest(new PassengerRequest(floor, passengers));
-                }
-                else
-                {
-                    Console.WriteLine("Invalid number of passengers.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid floor number.");
+                case "1":
+                    DisplayElevatorStatus();
+                    break;
+                case "2":
+                    Console.Write("Enter floor number: ");
+                    if (int.TryParse(Console.ReadLine(), out int floor))
+                    {
+                        Console.Write("Enter number of passengers: ");
+                        if (int.TryParse(Console.ReadLine(), out int passengers))
+                        {
+                            HandleRequest(new PassengerRequest(floor, passengers));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid number of passengers.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid floor number.");
+                    }
+                    break;
+                case "3":
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
             }
 
             await Task.Delay(1000);
@@ -142,7 +172,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var building = new Building(10, 3); // 10 floors, 3 elevators
+        var building = new Building(10, 5); // 10 floors, 5 elevators
         var controller = new ElevatorController(building);
 
         await controller.RunAsync();
