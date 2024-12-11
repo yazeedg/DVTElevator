@@ -182,14 +182,17 @@ public class ElevatorController
             switch (input)
             {
                 case "1":
+                    // List the status of all the elevators
                     DisplayElevatorStatus();
                     break;
                 case "2":
                     Console.Write("Enter floor number: ");
                     if (int.TryParse(Console.ReadLine(), out int floor))
                     {
+                        // Check if the floor entered is a valid value, we are assuming 10 floors for this app
                         if (floor < 1 || floor > 10)
                         {
+                            // Alert the user and return to the menu
                             Console.Write("** Invalid floor number entered. Press any key to continue..");
                             Console.ReadKey();
                             break;
@@ -227,6 +230,7 @@ public class ElevatorController
 }
 public class InvalidFloorException : Exception
 {
+    // Custom exception class for checking if the floor selected is valid for the building being processed.
     public int InvalidFloor { get; }
     public InvalidFloorException(string message) : base(message) { }
     public InvalidFloorException(string message, int invalidFloor) : base(message)
@@ -243,6 +247,8 @@ public class InvalidFloorException : Exception
 
 public class CapacityExceededException : Exception
 {
+    // Custom exception class for checking if the capacity of the elevator had been exceeded
+
     public int CurrentCapacity { get; }
     public int MaxCapacity { get; }
 
@@ -261,8 +267,6 @@ public class CapacityExceededException : Exception
         return $"{base.ToString()}, Current Capacity: {CurrentCapacity}, Max Capacity: {MaxCapacity}";
     }
 }
-
-
 
 class Program
 {
