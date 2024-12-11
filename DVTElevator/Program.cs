@@ -209,14 +209,39 @@ public class ElevatorController
 }
 public class InvalidFloorException : Exception
 {
-    // custom exception class for invalid floor selection
+    public int InvalidFloor { get; }
     public InvalidFloorException(string message) : base(message) { }
+    public InvalidFloorException(string message, int invalidFloor) : base(message)
+    {
+        InvalidFloor = invalidFloor;
+    }
+
+    public InvalidFloorException(string message, Exception innerException) : base(message, innerException) { }
+    public override string ToString()
+    {
+        return $"{base.ToString()}, Invalid Floor: {InvalidFloor}";
+    }
 }
 
 public class CapacityExceededException : Exception
 {
-    // custom exception class for elevator capacity exceeded
+    public int CurrentCapacity { get; }
+    public int MaxCapacity { get; }
+
     public CapacityExceededException(string message) : base(message) { }
+
+    public CapacityExceededException(string message, int currentCapacity, int maxCapacity) : base(message)
+    {
+        CurrentCapacity = currentCapacity;
+        MaxCapacity = maxCapacity;
+    }
+
+    public CapacityExceededException(string message, Exception innerException) : base(message, innerException) { }
+
+    public override string ToString()
+    {
+        return $"{base.ToString()}, Current Capacity: {CurrentCapacity}, Max Capacity: {MaxCapacity}";
+    }
 }
 
 
