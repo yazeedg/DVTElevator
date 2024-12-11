@@ -19,20 +19,34 @@ public class Elevator
 
     public void AddRequest(PassengerRequest request)
     {
-        if (PassengerCount + request.PassengerCount <= MaxPassengers)
+        try
         {
+            if (PassengerCount + request.PassengerCount > MaxPassengers)
+            {
+                throw new CapacityExceededException("Elevator capacity exceeded.");
+            }
             requests.Enqueue(request);
         }
-        else
+        catch (CapacityExceededException ex)
         {
-            // Handle overflow if number of passengers selected are more than the maximum for the elevator
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
-            Console.ReadKey();
-            Console.ResetColor();
-            
+            Console.WriteLine(ex.Message);
+            // Log exception
+            //Console.WriteLine($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
         }
+        //if (PassengerCount + request.PassengerCount <= MaxPassengers)
+        //{
+        //    requests.Enqueue(request);
+        //}
+        //else
+        //{
+        //    // Handle overflow if number of passengers selected are more than the maximum for the elevator
+        //    Console.BackgroundColor = ConsoleColor.Yellow;
+        //    Console.ForegroundColor = ConsoleColor.Black;
+            
+        //    Console.ReadKey();
+        //    Console.ResetColor();
+            
+        //}
     }
 
     public async Task MoveAsync()
@@ -40,18 +54,32 @@ public class Elevator
         while (requests.Any())
         {
             var request = requests.Dequeue();
-            await MoveToFloorAsync(request.Floor);
-            PassengerCount += request.PassengerCount;
+            try
+            {
+                await MoveToFloorAsync(request.Floor);
+                PassengerCount += request.PassengerCount;
+            }
+            catch (InvalidFloorException ex)
+            {
+                Console.WriteLine(ex.Message);
+                // Log exception
+            }
         }
     }
 
     public async Task MoveToFloorAsync(int floor)
     {
+        if (floor < 1 || floor > 10) // Assuming 10 floors
+        {
+            throw new InvalidFloorException("Invalid floor selection. Please choose a valid floor.");
+        }
+
         // Simulate elevator movement
         await Task.Delay(Math.Abs(CurrentFloor - floor) * 1000);
         CurrentFloor = floor;
         Status = ElevatorStatus.Stationary;
     }
+}
 }
 
 public class PassengerRequest
@@ -106,17 +134,19 @@ public class ElevatorController
 
     public void HandleRequest(PassengerRequest request)
     {
-        var nearestElevator = FindNearestElevator(request.Floor);
-        if (nearestElevator != null)
+        try
         {
+            var nearestElevator = FindNearestElevator(request.Floor);
+            if (nearestElevator == null)
+            {
+                throw new InvalidOperationException("No available elevators to handle the request.");
+            }
             nearestElevator.AddRequest(request);
-            Console.WriteLine($"Elevator {nearestElevator.Id} is on its way to floor {request.Floor}.");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadKey();
         }
-        else
+        catch (Exception ex)
         {
-            Console.WriteLine("No available elevators to handle the request.");
+            Console.WriteLine(ex.Message);
+            // Log exception
         }
     }
 
@@ -176,6 +206,16 @@ public class ElevatorController
         }
     }
 }
+public class InvalidFloorException : Exception
+{
+    public InvalidFloorException(string message) : base(message) { }
+}
+
+public class CapacityExceededException : Exception
+{
+    public CapacityExceededException(string message) : base(message) { }
+}
+
 
 class Program
 {
