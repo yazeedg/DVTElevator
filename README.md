@@ -26,8 +26,9 @@ business requirements and simplifies the development process for teams.
 
 The console application must include the following key features:
 - **Elevator System Menu**
-  
-  ![image](https://github.com/user-attachments/assets/45df3fc1-3833-4266-b011-ccf4c7ef81b6)
+  ![image](https://github.com/user-attachments/assets/6b934aa9-9917-4eb7-8c6e-51e3bbce24c5)
+
+
 
 - **Real-Time Elevator Status**  
     Display the real-time status of each elevator, including its current floor, direction of movement,
