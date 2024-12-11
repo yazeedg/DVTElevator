@@ -92,8 +92,14 @@ namespace DVTElevator.Tests
             var controller = new ElevatorController(building);
 
             var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(11, 2)));
-            Assert.NotNull(exception);
+            Console.WriteLine(exception);
+
+            //Assert.NotNull(exception);
             Assert.IsType<InvalidFloorException>(exception);
+            /*var exception = Assert.Throws<InvalidFloorException>(() => controller.HandleRequest(new PassengerRequest(11, 2)));
+            Assert.Equal("Invalid floor selection. Please choose a valid floor.", exception.Message);
+            Assert.Equal(11, exception.InvalidFloor);
+            */
         }
 
         [Fact]
@@ -107,5 +113,7 @@ namespace DVTElevator.Tests
             Assert.NotNull(exception);
             Assert.IsType<CapacityExceededException>(exception);
         }
+
+ 
     }
 }
