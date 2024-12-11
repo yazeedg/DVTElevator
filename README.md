@@ -48,7 +48,8 @@ elevator request. Minimize wait times for passengers and optimize elevator usage
 - **Passenger Limit Handling**  
 Consider the maximum passenger limit for each elevator. Prevent the elevator from becoming
 overloaded and handle scenarios where additional elevators might be required.
-![image](https://github.com/user-attachments/assets/66a6cdb0-9e0a-4e68-b207-35a0d3278ad3)
+![image](https://github.com/user-attachments/assets/e276fef4-a31c-4e13-a716-5e804011d6d4)
+
 
 - **Consideration for Different Elevator Types**  
 Although the challenge focuses on passenger elevators, consider the existence of other elevator
