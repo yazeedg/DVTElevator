@@ -50,6 +50,10 @@ to call an elevator to a specific floor and indicate the number of passengers wa
 - **Multiple Floors and Elevators Support**  
 Design the application to accommodate buildings with multiple floors and multiple elevators.
 Ensure that elevators can efficiently move between different floors.
+
+![image](https://github.com/user-attachments/assets/d2b286a1-91ec-4f27-9992-8835a5cd26ea)
+
+
 - **Efficient Elevator Dispatching**  
 Implement an algorithm that efficiently directs the nearest available elevator to respond to an
 elevator request. Minimize wait times for passengers and optimize elevator usage.
@@ -65,6 +69,7 @@ overloaded and handle scenarios where additional elevators might be required.
 Although the challenge focuses on passenger elevators, consider the existence of other elevator
 types, such as high-speed elevators, glass elevators, and freight elevators. Plan the application's
 architecture to accommodate future extension for these types.
+
 - **Real-Time Operation**  
 Ensure that the console application operates in real-time, providing immediate responses to user
 interactions and accurately reflecting elevator movements and status.
