@@ -29,6 +29,7 @@ public class Elevator
             Console.BackgroundColor = ConsoleColor.Yellow;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
+            Console.ReadKey();
             Console.ResetColor();
             
         }
@@ -73,7 +74,7 @@ public class Building
     public Building(int numberOfFloors, int numberOfElevators)
     {
         Floors = Enumerable.Range(1, numberOfFloors).ToList();
-        Elevators = new List<Elevator>(); //(numberOfElevators);
+        Elevators = new List<Elevator>();  
         for (int i = 0; i < numberOfElevators; i++)
         {
             Elevators.Add(new Elevator { Id = i + 1, CurrentFloor = 1, Direction = Direction.None, Status = ElevatorStatus.Stationary });
@@ -99,6 +100,8 @@ public class ElevatorController
         {
             Console.WriteLine($"{elevator.Id,2} | {elevator.CurrentFloor,5} | {elevator.Direction,-9} | {elevator.Status,-10} | {elevator.PassengerCount,10}");
         }
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
     }
 
     public void HandleRequest(PassengerRequest request)
@@ -108,6 +111,8 @@ public class ElevatorController
         {
             nearestElevator.AddRequest(request);
             Console.WriteLine($"Elevator {nearestElevator.Id} is on its way to floor {request.Floor}.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
         else
         {
@@ -126,7 +131,10 @@ public class ElevatorController
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("Elevator Control System");
+            Console.BackgroundColor = ConsoleColor.DarkGreen; 
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("DVT Elevator System");
+            Console.ResetColor();
             Console.WriteLine("1. View Elevator Status");
             Console.WriteLine("2. Call Elevator");
             Console.WriteLine("3. Exit");
