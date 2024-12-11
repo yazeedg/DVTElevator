@@ -27,7 +27,9 @@ business requirements and simplifies the development process for teams.
 The console application must include the following key features:
 - **Elevator System Menu**
   
-  ![image](https://github.com/user-attachments/assets/45df3fc1-3833-4266-b011-ccf4c7ef81b6)
+  ![image](https://github.com/user-attachments/assets/6b934aa9-9917-4eb7-8c6e-51e3bbce24c5)
+
+
 
 - **Real-Time Elevator Status**  
     Display the real-time status of each elevator, including its current floor, direction of movement,
@@ -59,6 +61,10 @@ architecture to accommodate future extension for these types.
 Ensure that the console application operates in real-time, providing immediate responses to user
 interactions and accurately reflecting elevator movements and status.
 
+- **Evaluation and validation of valid floor number** 
+![image](https://github.com/user-attachments/assets/3f25d6a4-ea0d-41c1-a0df-61fa427bdcce)
 
+- **Evaluation and validation of maximum passengers for an elevator** 
+![image](https://github.com/user-attachments/assets/8e8d8ab0-1fad-41c7-aa5e-a7a2eac86058)
 
 
