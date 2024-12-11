@@ -53,11 +53,13 @@ Ensure that elevators can efficiently move between different floors.
 - **Efficient Elevator Dispatching**  
 Implement an algorithm that efficiently directs the nearest available elevator to respond to an
 elevator request. Minimize wait times for passengers and optimize elevator usage.
+
+![image](https://github.com/user-attachments/assets/93f9ac7d-935d-4de9-8de8-6b1b6207d553)
+
 - **Passenger Limit Handling**  
 Consider the maximum passenger limit for each elevator. Prevent the elevator from becoming
 overloaded and handle scenarios where additional elevators might be required.
 ![image](https://github.com/user-attachments/assets/e276fef4-a31c-4e13-a716-5e804011d6d4)
-
 
 - **Consideration for Different Elevator Types**  
 Although the challenge focuses on passenger elevators, consider the existence of other elevator
@@ -66,6 +68,9 @@ architecture to accommodate future extension for these types.
 - **Real-Time Operation**  
 Ensure that the console application operates in real-time, providing immediate responses to user
 interactions and accurately reflecting elevator movements and status.
+
+![image](https://github.com/user-attachments/assets/44edfc85-20be-4425-a01f-f8913ffc0f89)
+
 
 - **Evaluation and validation of valid floor number** 
 ![image](https://github.com/user-attachments/assets/3f25d6a4-ea0d-41c1-a0df-61fa427bdcce)
