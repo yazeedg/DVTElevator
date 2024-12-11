@@ -29,7 +29,8 @@ The console application must include the following key features:
 - **Real-Time Elevator Status**  
     Display the real-time status of each elevator, including its current floor, direction of movement,
 whether it's in motion or stationary, and the number of passengers it is carrying.
-    
+    ![image](https://github.com/user-attachments/assets/fed75678-b8a7-4110-98d1-66b817c42642)
+
 
 - **Interactive Elevator Control**  
     Allow users to interact with the elevators through the console application. Users should be able
