@@ -23,30 +23,16 @@ public class Elevator
         {
             if (PassengerCount + request.PassengerCount > MaxPassengers)
             {
-                throw new CapacityExceededException("Elevator capacity exceeded.");
+                throw new CapacityExceededException("*** Elevator capacity exceeded. ***");
             }
             requests.Enqueue(request);
         }
         catch (CapacityExceededException ex)
         {
             Console.WriteLine(ex.Message);
-            // Log exception
+            
             //Console.WriteLine($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
         }
-        //if (PassengerCount + request.PassengerCount <= MaxPassengers)
-        //{
-        //    requests.Enqueue(request);
-        //}
-        //else
-        //{
-        //    // Handle overflow if number of passengers selected are more than the maximum for the elevator
-        //    Console.BackgroundColor = ConsoleColor.Yellow;
-        //    Console.ForegroundColor = ConsoleColor.Black;
-            
-        //    Console.ReadKey();
-        //    Console.ResetColor();
-            
-        //}
     }
 
     public async Task MoveAsync()
@@ -62,7 +48,7 @@ public class Elevator
             catch (InvalidFloorException ex)
             {
                 Console.WriteLine(ex.Message);
-                // Log exception
+
             }
         }
     }
@@ -71,7 +57,7 @@ public class Elevator
     {
         if (floor < 1 || floor > 10) // Assuming 10 floors
         {
-            throw new InvalidFloorException("Invalid floor selection. Please choose a valid floor.");
+            throw new InvalidFloorException("*** Invalid floor selection. Please choose a valid floor. ***");
         }
 
         // Simulate elevator movement
@@ -80,7 +66,7 @@ public class Elevator
         Status = ElevatorStatus.Stationary;
     }
 }
-}
+
 
 public class PassengerRequest
 {
@@ -139,14 +125,14 @@ public class ElevatorController
             var nearestElevator = FindNearestElevator(request.Floor);
             if (nearestElevator == null)
             {
-                throw new InvalidOperationException("No available elevators to handle the request.");
+                throw new InvalidOperationException("** No available elevators to handle the request.");
             }
             nearestElevator.AddRequest(request);
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
-            // Log exception
+            LogException(ex);
         }
     }
 
@@ -205,6 +191,12 @@ public class ElevatorController
             await Task.Delay(1000);
         }
     }
+
+    public void LogException(Exception ex)
+    {
+        Console.WriteLine($"[{DateTime.Now}] Error: {ex.Message}");
+        // Additional logging details can be added here
+    }
 }
 public class InvalidFloorException : Exception
 {
@@ -215,6 +207,7 @@ public class CapacityExceededException : Exception
 {
     public CapacityExceededException(string message) : base(message) { }
 }
+
 
 
 class Program
