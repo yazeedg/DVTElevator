@@ -148,7 +148,9 @@ public class ElevatorController
                 throw new InvalidOperationException("** No available elevators to handle the request.");
             }
             nearestElevator.AddRequest(request);
+            // Alert user to elevator being sent
             Console.WriteLine($"Elevator {nearestElevator.Id} is being dispatched to floor {request.Floor}.");
+            Console.ReadKey();
 
         }
         catch (Exception ex)
