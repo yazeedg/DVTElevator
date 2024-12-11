@@ -5,6 +5,12 @@ elevators within a large building, with the aim of optimizing passenger transpor
 application should adhere to Object-Oriented Programming (OOP) principles to ensure modularity
 and maintainability.
 
+| Plugin | README |
+| ------ | ------ |
+| Application Type | Console |
+| .NET Version | 8.0 |
+| Test | Xunit V 2.9.2 |
+
 Those reviewing the submission consider the following:
 ### GitHub Submission
 - Repo is public
