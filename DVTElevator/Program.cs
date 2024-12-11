@@ -13,6 +13,8 @@ public class Elevator
     public Direction Direction { get; set; }
     public ElevatorStatus Status { get; set; }
     public int PassengerCount { get; set; }
+
+    //Let us set a constant for 10 passengers per elevator as the maximum.
     public const int MaxPassengers = 10;
    // private Queue<PassengerRequest> requests = new Queue<PassengerRequest>();
     public Queue<PassengerRequest> requests { get; private set; } = new Queue<PassengerRequest>();
@@ -23,15 +25,15 @@ public class Elevator
         {
             if (PassengerCount + request.PassengerCount > MaxPassengers)
             {
-                throw new CapacityExceededException("*** Elevator capacity exceeded. ***");
+                throw new CapacityExceededException($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
+                
             }
             requests.Enqueue(request);
         }
         catch (CapacityExceededException ex)
         {
             Console.WriteLine(ex.Message);
-            
-            //Console.WriteLine($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
+            Console.ReadKey(); 
         }
     }
 
@@ -48,7 +50,7 @@ public class Elevator
             catch (InvalidFloorException ex)
             {
                 Console.WriteLine(ex.Message);
-
+                Console.ReadKey();
             }
         }
     }
@@ -110,6 +112,7 @@ public class ElevatorController
         Console.WriteLine("Elevator Status:");
         Console.WriteLine("ID | Floor | Direction | Status     | Passengers");
         Console.WriteLine("-----------------------------------------------");
+        
         foreach (var elevator in building.Elevators)
         {
             Console.WriteLine($"{elevator.Id,2} | {elevator.CurrentFloor,5} | {elevator.Direction,-9} | {elevator.Status,-10} | {elevator.PassengerCount,10}");
@@ -195,7 +198,6 @@ public class ElevatorController
     public void LogException(Exception ex)
     {
         Console.WriteLine($"[{DateTime.Now}] Error: {ex.Message}");
-        // Additional logging details can be added here
     }
 }
 public class InvalidFloorException : Exception

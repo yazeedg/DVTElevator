@@ -104,7 +104,7 @@ namespace DVTElevator.Tests
             var controller = new ElevatorController(building);
             var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(5, -1)));
             Assert.NotNull(exception);
-            Assert.IsType<ArgumentOutOfRangeException>(exception);
+            Assert.IsType<CapacityExceededException>(exception);
         }
     }
 }
