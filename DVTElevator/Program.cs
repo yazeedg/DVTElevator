@@ -23,6 +23,8 @@ public class Elevator
     {
         try
         {
+            // Check if our requested passengers is greater than the max allowed for the elevator
+            //  Alert the user if it does exceed
             if (PassengerCount + request.PassengerCount > MaxPassengers)
             {
                 throw new CapacityExceededException($"You requested for {request.PassengerCount} passengers. The elevator can hold a maximum of {MaxPassengers} passengers. Please select again.");
@@ -57,11 +59,15 @@ public class Elevator
 
     public async Task MoveToFloorAsync(int floor)
     {
-        if (floor < 1 || floor > 10) // Assuming 10 floors
+        // Validate if an acceptable floor is requested. we are assuming 10 floors for this app
+        if (floor < 1 || floor > 10) 
         {
             throw new InvalidFloorException("*** Invalid floor selection. Please choose a valid floor. ***");
         }
-
+        else
+        {
+            Console.WriteLine("Elevator for floor {0} is on its way to you.", floor);
+        }
         // Simulate elevator movement
         await Task.Delay(Math.Abs(CurrentFloor - floor) * 1000);
         CurrentFloor = floor;
@@ -72,6 +78,7 @@ public class Elevator
 
 public class PassengerRequest
 {
+    //This request will be setting the floor and passenger count
     public int Floor { get; set; }
     public int PassengerCount { get; set; }
 
@@ -84,6 +91,7 @@ public class PassengerRequest
 
 public class Building
 {
+    // This class will be instantiated for each building
     public List<Elevator> Elevators { get; set; }
     public List<int> Floors { get; set; }
 
@@ -109,7 +117,8 @@ public class ElevatorController
 
     public void DisplayElevatorStatus()
     {
-        Console.WriteLine("Elevator Status:");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Elevator Status");
         Console.WriteLine("ID | Floor | Direction | Status     | Passengers");
         Console.WriteLine("-----------------------------------------------");
         
@@ -120,6 +129,7 @@ public class ElevatorController
         }
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
+        Console.ResetColor();
     }
 
     public void HandleRequest(PassengerRequest request)
@@ -128,7 +138,7 @@ public class ElevatorController
         {
             if (request.Floor < 1 || request.Floor > building.Floors.Count)
             {
-                throw new InvalidFloorException("** Invalid floor selection. Please choose a valid floor.");
+                throw new InvalidFloorException("** Invalid floor selection. Please choose a valid floor.", request.Floor);
             }
 
             var nearestElevator = FindNearestElevator(request.Floor);
@@ -138,6 +148,8 @@ public class ElevatorController
                 throw new InvalidOperationException("** No available elevators to handle the request.");
             }
             nearestElevator.AddRequest(request);
+            Console.WriteLine($"Elevator {nearestElevator.Id} is being dispatched to floor {request.Floor}.");
+
         }
         catch (Exception ex)
         {
@@ -176,6 +188,12 @@ public class ElevatorController
                     Console.Write("Enter floor number: ");
                     if (int.TryParse(Console.ReadLine(), out int floor))
                     {
+                        if (floor < 1 || floor > 10)
+                        {
+                            Console.Write("** Invalid floor number entered. Press any key to continue..");
+                            Console.ReadKey();
+                            break;
+                        }
                         Console.Write("Enter number of passengers: ");
                         if (int.TryParse(Console.ReadLine(), out int passengers))
                         {
@@ -183,12 +201,12 @@ public class ElevatorController
                         }
                         else
                         {
-                            Console.WriteLine("Invalid number of passengers.");
+                            Console.Write("Invalid number of passengers. Press any key to continue..");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid floor number.");
+                        Console.WriteLine("Calling an elevator...");
                     }
                     break;
                 case "3":
