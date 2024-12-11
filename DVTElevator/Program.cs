@@ -113,6 +113,7 @@ public class ElevatorController
         Console.WriteLine("ID | Floor | Direction | Status     | Passengers");
         Console.WriteLine("-----------------------------------------------");
         
+        
         foreach (var elevator in building.Elevators)
         {
             Console.WriteLine($"{elevator.Id,2} | {elevator.CurrentFloor,5} | {elevator.Direction,-9} | {elevator.Status,-10} | {elevator.PassengerCount,10}");
@@ -125,7 +126,13 @@ public class ElevatorController
     {
         try
         {
+            if (request.Floor < 1 || request.Floor > building.Floors.Count)
+            {
+                throw new InvalidFloorException("** Invalid floor selection. Please choose a valid floor.");
+            }
+
             var nearestElevator = FindNearestElevator(request.Floor);
+
             if (nearestElevator == null)
             {
                 throw new InvalidOperationException("** No available elevators to handle the request.");
@@ -135,7 +142,7 @@ public class ElevatorController
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
-            LogException(ex);
+            //LogException(ex);
         }
     }
 
@@ -202,11 +209,13 @@ public class ElevatorController
 }
 public class InvalidFloorException : Exception
 {
+    // custom exception class for invalid floor selection
     public InvalidFloorException(string message) : base(message) { }
 }
 
 public class CapacityExceededException : Exception
 {
+    // custom exception class for elevator capacity exceeded
     public CapacityExceededException(string message) : base(message) { }
 }
 
@@ -216,7 +225,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var building = new Building(10, 5); // 10 floors, 5 elevators
+        var building = new Building(10, 4); // 10 floors, 4 elevators
         var controller = new ElevatorController(building);
 
         await controller.RunAsync();

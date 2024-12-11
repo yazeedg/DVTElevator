@@ -90,6 +90,7 @@ namespace DVTElevator.Tests
 
             var building = new Building(10, 3);
             var controller = new ElevatorController(building);
+
             var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(11, 2)));
             Assert.NotNull(exception);
             Assert.IsType<InvalidFloorException>(exception);
@@ -102,7 +103,7 @@ namespace DVTElevator.Tests
 
             var building = new Building(10, 3);
             var controller = new ElevatorController(building);
-            var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(5, -1)));
+            var exception = Record.Exception(() => controller.HandleRequest(new PassengerRequest(5, 23)));
             Assert.NotNull(exception);
             Assert.IsType<CapacityExceededException>(exception);
         }
