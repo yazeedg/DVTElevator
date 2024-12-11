@@ -197,6 +197,7 @@ public class ElevatorController
                             Console.ReadKey();
                             break;
                         }
+                        // Number of passengers will only be displayed when the floor number is valid
                         Console.Write("Enter number of passengers: ");
                         if (int.TryParse(Console.ReadLine(), out int passengers))
                         {
@@ -272,7 +273,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var building = new Building(10, 4); // 10 floors, 4 elevators
+        var building = new Building(10, 4); // 10 floors, 4 elevators for this app
         var controller = new ElevatorController(building);
 
         await controller.RunAsync();
