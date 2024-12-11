@@ -25,16 +25,19 @@ to more maintainable, robust, and scalable applications. It also enables better 
 business requirements and simplifies the development process for teams.
 
 The console application must include the following key features:
+- **Elevator System Menu**
+  ![image](https://github.com/user-attachments/assets/45df3fc1-3833-4266-b011-ccf4c7ef81b6)
 
 - **Real-Time Elevator Status**  
     Display the real-time status of each elevator, including its current floor, direction of movement,
 whether it's in motion or stationary, and the number of passengers it is carrying.
     ![image](https://github.com/user-attachments/assets/fed75678-b8a7-4110-98d1-66b817c42642)
 
-
 - **Interactive Elevator Control**  
     Allow users to interact with the elevators through the console application. Users should be able
 to call an elevator to a specific floor and indicate the number of passengers waiting on each floor.
+![image](https://github.com/user-attachments/assets/5c341b77-1508-48fe-96a2-036beaa5e6be)
+
 - **Multiple Floors and Elevators Support**  
 Design the application to accommodate buildings with multiple floors and multiple elevators.
 Ensure that elevators can efficiently move between different floors.
@@ -44,6 +47,8 @@ elevator request. Minimize wait times for passengers and optimize elevator usage
 - **Passenger Limit Handling**  
 Consider the maximum passenger limit for each elevator. Prevent the elevator from becoming
 overloaded and handle scenarios where additional elevators might be required.
+![image](https://github.com/user-attachments/assets/66a6cdb0-9e0a-4e68-b207-35a0d3278ad3)
+
 - **Consideration for Different Elevator Types**  
 Although the challenge focuses on passenger elevators, consider the existence of other elevator
 types, such as high-speed elevators, glass elevators, and freight elevators. Plan the application's
